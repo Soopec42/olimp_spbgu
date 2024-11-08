@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+
+
+typedef long long ll;
+using namespace std;
+
+vector<long long> qsort(vector<long long> vect)
+{
+	long long sredn;
+	vector<long long> dom, poslem, fmas, smas;
+	if (vect.size() <= 1)
+		return vect;
+	if (vect.size() > 1)
+		sredn = vect[0];
+	for (long long k = 1; k < vect.size(); k++)
+	{
+		if (vect[k] < sredn)
+			dom.push_back(vect[k]);
+		else
+			poslem.push_back(vect[k]);
+	}
+	fmas = qsort(dom);
+	smas = qsort(poslem);
+
+	fmas.push_back(sredn);
+
+	for (long long k = 0; k < poslem.size(); k++)
+	{
+		fmas.push_back(poslem[k]);
+	}
+	return fmas;
+}
+
+long long find(vector<long long> news)
+{
+	for (long long k = 2; k < news.size(); k++)
+	{
+		long long sum = 0;
+		for (long long j = 0; j < k; j++)
+		{
+		
+			sum += news[j];
+			
+		}
+		if (sum > news[k])
+			return k + 1;
+		sum = 0;
+	}
+	return -1;
+}
+
+int main()
+{
+	long long n, max = 0, sum = 0, maxall = -1;
+	cin >> n;
+	vector<long long> mas(n), news;
+	for (long long& x : mas)
+	{
+		cin >> x;
+	}
+	news = qsort(mas);
+	cout << find(news);
+	
+
+
+}
