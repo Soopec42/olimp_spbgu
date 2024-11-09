@@ -32,27 +32,11 @@ vector<long long> qsort(vector<long long> vect)
 	return fmas;
 }
 
-long long find(vector<long long> news)
-{
-	for (long long k = 2; k < news.size(); k++)
-	{
-		long long sum = 0;
-		for (long long j = 0; j < k; j++)
-		{
-		
-			sum += news[j];
-			
-		}
-		if (sum > news[k])
-			return k + 1;
-		sum = 0;
-	}
-	return -1;
-}
+
 
 int main()
 {
-	long long n, max = 0, sum = 0, maxall = -1;
+	long long n;
 	cin >> n;
 	vector<long long> mas(n), news;
 	for (long long& x : mas)
@@ -60,8 +44,24 @@ int main()
 		cin >> x;
 	}
 	news = qsort(mas);
-	cout << find(news);
-	
+	ll p = 1e15;
+	long long l = 0, r = 2, ans = p, sum = news[0] + news[1];
+	while (r < n)
+	{
+		if (sum <= news[r]) {
+			sum += news[r++];
+		}
+		else {
+			ans = min(ans, r - l + 1);
+			sum -= news[l++];
+		}
+	}
+	if (ans == p) {
+		cout << -1;
+	}
+	else {
+		cout << ans;
+	}
 
 
 }
